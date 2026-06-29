@@ -1,0 +1,51 @@
+id,input_name,input_lang,category,expected_bucket,note
+1,Quercus calliprinos,lat,clean,resolve,Palestine oak / אלון מצוי
+2,Ceratonia siliqua,lat,clean,resolve,carob / חרוב מצוי
+3,Cupressus sempervirens,lat,clean,resolve,Italian cypress / ברוש מצוי
+4,Pinus halepensis,lat,clean,resolve,Aleppo pine / אורן ירושלים
+5,Nerium oleander,lat,clean,resolve,oleander / הרדוף — toxic
+6,Cercis siliquastrum,lat,clean,resolve,Judas tree / כליל החורש
+7,Myrtus communis,lat,clean,resolve,myrtle / הדס מצוי
+8,Laurus nobilis,lat,clean,resolve,bay laurel / ער אציל
+9,Olea europaea,lat,clean,resolve,olive / זית
+10,Pistacia lentiscus,lat,clean,resolve,mastic / אלת המסטיק
+11,Bougainvillea glabra,lat,clean,resolve,בוגנוויליה
+12,Jacaranda mimosifolia,lat,clean,resolve,סיגלון
+13,Lagerstroemia indica,lat,clean,resolve,crape myrtle
+14,Vitex agnus-castus,lat,clean,resolve,chaste tree — hyphenated epithet
+15,Punica granatum,lat,clean,resolve,pomegranate / רימון
+16,Quercus calliprynos,lat,typo,resolve,typo i->y
+17,Nerium oleander,lat,typo,resolve,typo extra e
+18,Jacaranda mimosafolia,lat,typo,resolve,typo i->a
+19,Bougainvilea glabra,lat,typo,resolve,typo missing l
+20,Lagerstroemia indca,lat,typo,resolve,typo missing i
+21,Cupresus sempervirens,lat,typo,resolve,typo missing s
+22,Pistacia lentiscas,lat,typo,resolve,typo u->a
+23,Cercis siliquastram,lat,typo,resolve,typo u->a
+24,Plumbago capensis,lat,synonym,resolve,syn -> P. auriculata
+25,Ficus retusa,lat,synonym,resolve,syn -> F. microcarpa
+26,Ficus nitida,lat,synonym,resolve,syn -> F. microcarpa
+27,Pennisetum setaceum,lat,synonym,resolve,reclassified -> Cenchrus setaceus (invasive in IL)
+28,Rosmarinus officinalis,lat,synonym,resolve,backbone-dependent -> Salvia rosmarinus
+29,Tecomaria capensis,lat,synonym,resolve,syn -> Tecoma capensis
+30,Aptenia cordifolia,lat,synonym,resolve,syn -> Mesembryanthemum cordifolium
+31,Senecio cineraria,lat,synonym,resolve,reclassified -> Jacobaea maritima
+32,Prunella vulgaris,lat,homonym,resolve,homonym with a bird genus — must stay Plantae
+33,Acacia,lat,higher_rank,review,genus only -> review (want species)
+34,Pittosporum,lat,higher_rank,review,genus only -> review
+35,Phoenix,lat,higher_rank,review,genus only; also a non-plant homonym
+36,ברוש מצוי,he,hebrew_only,review,Cupressus sempervirens — no crosswalk in Phase 0
+37,הרדוף הנחלים,he,hebrew_only,review,Nerium oleander
+38,כליל החורש,he,hebrew_only,review,Cercis siliquastrum
+39,חרוב מצוי,he,hebrew_only,review,Ceratonia siliqua
+40,אלון מצוי,he,hebrew_only,review,Quercus calliprinos
+41,זית אירופי,he,hebrew_only,review,Olea europaea
+42,סיגלון,he,hebrew_only,review,Jacaranda mimosifolia
+43,שיח אברהם מצוי,he,hebrew_only,review,Vitex agnus-castus
+44,הדס מצוי,he,hebrew_only,review,Myrtus communis
+45,אורן ירושלים,he,hebrew_only,review,Pinus halepensis
+46,Asdkfj qwertus,lat,junk,review,nonsense -> NONE
+47,Felis catus,lat,junk,review,animal -> must NOT yield a plant key
+48,,lat,junk,review,empty string edge case
+49,Lagerstroemia indica 'Natchez',lat,cultivar,resolve,cultivar -> strip -> species
+50,Olea europaea 'Swan Hill',lat,cultivar,resolve,cultivar -> strip -> species

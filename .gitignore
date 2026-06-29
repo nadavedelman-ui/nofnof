@@ -1,0 +1,15 @@
+# bulky / regenerable artifacts — keep the repo lean
+data/raw/
+cache/
+data/staging.duckdb
+data/*.duckdb
+__pycache__/
+*.pyc
+
+# heavy source art (optimized copies live in web/assets/)
+Design refenrence/
+
+# local tooling
+.claude/
+node_modules/
+*.log

@@ -1,0 +1,83 @@
+source_id,name_he,name_lat,reason,confidence,matchType
+1076,מנתור המדבר,Matthiola livida,higher_rank:GENUS,99,HIGHERRANK
+1151,יינית בינונית,Oenanthe prolifera,higher_rank:GENUS,99,HIGHERRANK
+1187,אפזרית מלוחה,Spergularia salina,higher_rank:FAMILY,99,HIGHERRANK
+1268,לשישית בוצינית,Chrozophora obliqua,higher_rank:GENUS,99,HIGHERRANK
+1291,קיפודן דביק,Echinops viscosus,higher_rank:GENUS,99,HIGHERRANK
+1293,אספסת בלנש,Medicago blncheana,higher_rank:GENUS,96,HIGHERRANK
+1345,אסתר הביצות,Aster tripolium,higher_rank:FAMILY,99,HIGHERRANK
+1370,בן-אפר מצוי,Schedonorus arundinacea,higher_rank:FAMILY,96,HIGHERRANK
+1378,עדשה מזרחית,Lens orientalis,higher_rank:GENUS,99,HIGHERRANK
+1399,עטיינית קצרה,Crypsis schoenoides,higher_rank:GENUS,99,HIGHERRANK
+1413,זוגן אדום,Zygophyllum coccineum,higher_rank:FAMILY,99,HIGHERRANK
+1506,אחישבת ענף,Pecedanum junceum,higher_rank:KINGDOM,99,HIGHERRANK
+1525,כף-אווז ריחנית,Chenopodium ambrosioides,higher_rank:FAMILY,99,HIGHERRANK
+1537,אסתר מרצעני,Aster subulatus,higher_rank:GENUS,99,HIGHERRANK
+1623,יפרוק המדבר,,empty,,
+1637,תורמוס שעיר,Lupinus micranthus,higher_rank:GENUS,99,HIGHERRANK
+1672,טופח זקוף,Lathyrus insconpicuus,higher_rank:GENUS,96,HIGHERRANK
+1729,חורשף השבכה,Atractilys cancellata,low_confidence:81,81,FUZZY
+1738,אספסת החבית,Medicago tuberculata,higher_rank:GENUS,99,HIGHERRANK
+1765,דבשה הודית,Melilotos indicus,low_confidence:87,87,FUZZY
+1817,שעורה נימית,Hordeum hystrix,higher_rank:FAMILY,99,HIGHERRANK
+1840,שנית קטנת-עלים,Lythrum hyssopifolium,higher_rank:GENUS,99,HIGHERRANK
+1908,מלוח רגלני,Atriplex portulacoides,higher_rank:FAMILY,99,HIGHERRANK
+1939,שנהבית הרוזמרין,Seidlitzia rosmarinus,higher_rank:GENUS,99,HIGHERRANK
+1947,נהרונית נימית,Potamageton trichoides,low_confidence:86,86,FUZZY
+2044,מלקולמיה חרוקה,Melcolmia crenulata,higher_rank:GENUS,85,HIGHERRANK
+2052,מלעניאל מצוי,Stipa capensis,higher_rank:FAMILY,99,HIGHERRANK
+2110,היפוכריס קרח,Hypocheris glabra,higher_rank:FAMILY,86,HIGHERRANK
+2121,ציפורנית חופית,Silene modesta,higher_rank:GENUS,99,HIGHERRANK
+2164,צלע-שור הזקופה,Bupleurum crenata,higher_rank:GENUS,96,HIGHERRANK
+2182,גומא ננסי,Cyperus pygmaeus,higher_rank:FAMILY,99,HIGHERRANK
+2225,אחישום מצוי,Nothoscordum indorum,higher_rank:GENUS,95,HIGHERRANK
+2227,חוזרר החורש,Eriobolus trilobatus,low_confidence:81,81,FUZZY
+2255,סיגל עטוי,Viola occulata,higher_rank:GENUS,95,HIGHERRANK
+2256,נורית עגולת-עלים,Ranunculus saniculifolius,higher_rank:GENUS,99,HIGHERRANK
+2268,חלבלוב מגורגר,Ehuphorbia granulata,higher_rank:KINGDOM,99,HIGHERRANK
+2282,מעריב משתלשל,Hesperis scabrum,higher_rank:GENUS,96,HIGHERRANK
+2337,מגלית משולשלת,Hipecoum pendulum,low_confidence:86,86,FUZZY
+2408,שעלב ריסני,Vulpia ciliata,higher_rank:GENUS,99,HIGHERRANK
+2436,אקינוס ריחני,Acinos rotundifolius,higher_rank:GENUS,99,HIGHERRANK
+2439,תלת-מלען מצוי,Aristida coerulescens,higher_rank:GENUS,99,HIGHERRANK
+244,נימפאה לבנה,Nympahaea alba,low_confidence:86,86,FUZZY
+248,סחלב שלוש-השיניים,Orchis tridentata,higher_rank:FAMILY,99,HIGHERRANK
+2484,פרע מחודד,Hypericum quandrandgulum,higher_rank:GENUS,93,HIGHERRANK
+2494,פלומית בובה,Doellia Bovei,higher_rank:KINGDOM,99,HIGHERRANK
+2513,דודוניאה דביקה,Dodonea viscosa,low_confidence:86,86,FUZZY
+2543,שעלב מצוי,Vulpia myuros,higher_rank:GENUS,99,HIGHERRANK
+2582,כף-אווז מבאישה,Grey Goosefoot,higher_rank:KINGDOM,99,HIGHERRANK
+2585,מלחית נגדית,Salsola oppositifolia,higher_rank:FAMILY,99,HIGHERRANK
+27,שקד מצוי,Amygdalus communis,higher_rank:GENUS,99,HIGHERRANK
+289,בן-מלח מכחיל,Arthrocnemum macrostachyum,higher_rank:FAMILY,99,HIGHERRANK
+2950,בורהביה זקופה,,empty,,
+2988,נץ-חלב הרודיון,Ornithogalum sp. nova,higher_rank:GENUS,95,HIGHERRANK
+3019,גומא צהבהב,Pycerus flavescens,low_confidence:85,85,FUZZY
+3055,שלהבית הכלאיים,Phlomis brachyodon x pungens,higher_rank:KINGDOM,99,HIGHERRANK
+3110,צללית מזרחית,meyery Minuartia,higher_rank:KINGDOM,99,HIGHERRANK
+3155,טחובית שרשונית,Bryum radiculosum,higher_rank:FAMILY,99,HIGHERRANK
+3156,טחובית דו-גונית,Bryum bicolor,higher_rank:ORDER,99,HIGHERRANK
+3164,אנתוסטודון מצטרר,Enthostodon attenuatus,low_confidence:81,81,FUZZY
+3166,אשבל נמרוד,Sachys paneiana,higher_rank:KINGDOM,99,HIGHERRANK
+3231,צלע-שור ערבתי,Buplleurum semicompositum,low_confidence:86,86,FUZZY
+3236,דורבנית שעירה,Delphinium ambiguum,higher_rank:GENUS,99,HIGHERRANK
+3258,אחילוף הנגב,Biarum negevensis,higher_rank:GENUS,95,HIGHERRANK
+3295,נזמית ארם-צובא,Lamium amplexicaule var. eherenbergii,higher_rank:SPECIES,100,HIGHERRANK
+3323,ברטרמיה זקופה,Bartramia stricta,higher_rank:GENUS,99,HIGHERRANK
+3360,אנתוסטודון גמוד-שיניים,Enthostodon duriaei,low_confidence:81,81,FUZZY
+3447,לפופית רייט,Ipomea wrightii,higher_rank:GENUS,85,HIGHERRANK
+36,כלך מצוי,Common Giant Fennel,higher_rank:KINGDOM,99,HIGHERRANK
+368,זיפנוצה מחוספס,Pennisetum asperifolium,higher_rank:GENUS,99,HIGHERRANK
+402,חפורית הפקעים,Phalaris tuberosa,higher_rank:GENUS,99,HIGHERRANK
+448,לשון-פר מצרית,Anchusa aegyptiaca,higher_rank:FAMILY,99,HIGHERRANK
+528,קרדה דרומית,Carduus australis,higher_rank:GENUS,99,HIGHERRANK
+678,סחלב השקיק,Orchis saccata,higher_rank:FAMILY,99,HIGHERRANK
+789,שושנתית הלבנון,Rosularia libanotica,higher_rank:GENUS,99,HIGHERRANK
+814,דובדבן שרוע,Cerasus prostrata,higher_rank:GENUS,99,HIGHERRANK
+853,אליסון הסלעים,Alyssum murale,higher_rank:GENUS,99,HIGHERRANK
+875,צורית גבוהה,Sedum sediforme,higher_rank:FAMILY,99,HIGHERRANK
+903,סחלב הביצות,Orchis laxiflora,higher_rank:GENUS,99,HIGHERRANK
+916,צמר מפוצל,Eremostachys laciniata,higher_rank:GENUS,99,HIGHERRANK
+94,בן-טיון בשרני,Inula crithmoides,higher_rank:FAMILY,99,HIGHERRANK
+979,טפרוסיה נאה,Tephrosia apollinea,higher_rank:GENUS,99,HIGHERRANK
+989,שיטה סלילנית,vachellia tortilis subsp. Raddiana,low_confidence:85,85,EXACT
