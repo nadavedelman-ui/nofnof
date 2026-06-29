@@ -1,6 +1,9 @@
 import * as duckdb from "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.29.0/+esm";
 import anime from "https://cdn.jsdelivr.net/npm/animejs@3.2.1/+esm";
 const RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+// only run reveal animations when motion is allowed AND the tab is visible — otherwise
+// requestAnimationFrame is paused and opacity:0 starts would leave content stuck blank.
+const canAnimate = () => !RM && document.visibilityState === "visible";
 
 /* ---------- vocab: life_form → Hebrew label / icon / placeholder palette ---------- */
 const LIFE = {
@@ -128,7 +131,7 @@ function renderGrid(){
   if(!matched.length){ grid.innerHTML = `<div class="empty">לא נמצאו צמחים התואמים את הסינון. נסו לרכך את הסינון.</div>`; document.getElementById("loadmore-wrap").hidden=true; return; }
   grid.innerHTML = matched.slice(0, state.limit).map(card).join("");
   document.getElementById("loadmore-wrap").hidden = matched.length <= state.limit;
-  if (!RM) anime({targets: "#grid .card", opacity: [0, 1], translateY: [16, 0], scale: [0.985, 1],
+  if (canAnimate()) anime({targets: "#grid .card", opacity: [0, 1], translateY: [16, 0], scale: [0.985, 1],
                   duration: 460, delay: anime.stagger(18, {grid: [4, 100], from: "first"}), easing: "easeOutCubic"});
 }
 
@@ -172,17 +175,19 @@ async function renderStats(){
   ];
   document.getElementById("stat-cards").innerHTML = cards.map(c=>`
     <div class="stat ${c.cls}"><div class="stat__ic">${c.ic}</div><div>
-      <div class="stat__num" data-v="${c.v}">${RM ? c.v.toLocaleString("he") : "0"}</div>
+      <div class="stat__num" data-v="${c.v}">0</div>
       <div class="stat__lbl">${c.l}</div></div></div>`).join("");
-  if (!RM) document.querySelectorAll(".stat__num").forEach((el, i) => {
+  document.querySelectorAll(".stat__num").forEach((el, i) => {
+    const v = +el.dataset.v;
+    if (!canAnimate()) { el.textContent = v.toLocaleString("he"); return; }
     const o = {n: 0};
-    anime({targets: o, n: +el.dataset.v, round: 1, duration: 1300, delay: 200 + i*90, easing: "easeOutExpo",
+    anime({targets: o, n: v, round: 1, duration: 1300, delay: 200 + i*90, easing: "easeOutExpo",
            update: () => el.textContent = Math.round(o.n).toLocaleString("he")});
   });
   const pct = Math.round(Number(s.lifed)/Number(s.total)*100);
   const circ = 2*Math.PI*50;
   const dv = document.getElementById("donut-val"), pctEl = document.getElementById("donut-pct");
-  if (RM) { dv.style.strokeDasharray = `${circ*pct/100} ${circ}`; pctEl.textContent = pct+"%"; }
+  if (!canAnimate()) { dv.style.strokeDasharray = `${circ*pct/100} ${circ}`; pctEl.textContent = pct+"%"; }
   else { const o = {p: 0}; anime({targets: o, p: pct, round: 1, duration: 1400, delay: 300, easing: "easeInOutCubic",
            update: () => { dv.style.strokeDasharray = `${circ*o.p/100} ${circ}`; pctEl.textContent = Math.round(o.p)+"%"; }}); }
   document.getElementById("donut-note").textContent = `לכל המינים יש זהות (GBIF) וסטטוס פלישה; ל-${pct}% גם צורת חיים מסווגת.`;
@@ -262,7 +267,7 @@ function toggleView(v){ document.getElementById("view-grid").classList.toggle("i
     await renderStats();
     await runQuery();
     document.getElementById("boot").hidden = true;
-    if (!RM)  // barely-there breeze on the gypsophila
+    if (canAnimate())  // barely-there breeze on the gypsophila
       anime({targets: ".deco--gypso", rotate: [0, 1.6], duration: 7800, direction: "alternate", loop: true, easing: "easeInOutSine"});
   }catch(err){
     console.error(err);
