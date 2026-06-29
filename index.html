@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>נופנוף — המאגר החכם לצמחי נוף בישראל</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- decorative watercolor botanical asset (transparent) -->
+  <img class="deco deco--gypso" src="assets/gypsophila.webp" alt="" aria-hidden="true" />
+
+  <!-- top navigation -->
+  <header class="nav">
+    <div class="nav__brand">
+      <img class="logo-olive" src="assets/olive-branch.webp" alt="נופנוף" />
+      <div class="nav__title"><span class="nav__he">נופנוף</span><span class="nav__en">Nofnof</span></div>
+    </div>
+    <nav class="nav__tabs">
+      <a class="is-active">מאגר צמחים</a>
+      <a>מדריכים</a>
+      <a>השוואה</a>
+      <a>מועדפים</a>
+      <a>מפות</a>
+      <a>הגדרות</a>
+    </nav>
+    <div class="nav__user">
+      <button class="iconbtn" title="עזרה">?</button>
+      <button class="iconbtn" title="התראות">🔔</button>
+      <span class="avatar">נ</span>
+    </div>
+  </header>
+
+  <!-- hero + search -->
+  <section class="hero">
+    <img class="hero__scape" src="assets/hillside.webp" alt="" aria-hidden="true" />
+    <h1 class="hero__title">המאגר החכם לצמחי נוף בישראל</h1>
+    <p class="hero__sub">מידע בוטני מדויק, מותאם לאקלים ולשיקולי תכנון — כלי עבודה חינמי לאדריכלי נוף</p>
+    <div class="search">
+      <svg viewBox="0 0 24 24" class="search__icon" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input id="q" type="search" placeholder="חיפוש לפי שם הצמח (עברית או לטינית), משפחה, או בית גידול…" autocomplete="off" />
+    </div>
+    <div id="filters" class="filters"><!-- filter chips injected by app.js --></div>
+  </section>
+
+  <!-- main layout: stats sidebar + results -->
+  <main class="layout">
+    <aside class="panel" id="stats">
+      <h2 class="panel__head"><span class="panel__leaf">🌿</span> תובנות מהמאגר</h2>
+      <div id="stat-cards" class="stat-cards"></div>
+      <div class="donut-wrap">
+        <svg viewBox="0 0 120 120" class="donut" id="donut" aria-hidden="true">
+          <circle cx="60" cy="60" r="50" class="donut__track"/>
+          <circle cx="60" cy="60" r="50" class="donut__val" id="donut-val"/>
+          <text x="60" y="56" class="donut__pct" id="donut-pct">—</text>
+          <text x="60" y="74" class="donut__lbl">שלמות זיהוי</text>
+        </svg>
+        <p class="donut__note" id="donut-note"></p>
+      </div>
+    </aside>
+
+    <section class="results">
+      <div class="results__bar">
+        <div class="results__count" id="count">טוען…</div>
+        <div class="results__tools">
+          <select id="sort" class="select">
+            <option value="name_he">מיון: א׳–ת׳ (שם)</option>
+            <option value="scientific_name">מיון: שם מדעי</option>
+            <option value="family">מיון: משפחה</option>
+            <option value="price">מיון: מחיר</option>
+          </select>
+          <div class="viewtoggle">
+            <button id="view-grid" class="is-active" title="רשת">▦</button>
+            <button id="view-list" title="רשימה">☰</button>
+          </div>
+        </div>
+      </div>
+      <div id="grid" class="grid"></div>
+      <div id="loadmore-wrap" class="loadmore-wrap" hidden>
+        <button id="loadmore" class="btn-ghost">הצגת עוד צמחים</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- detail drawer -->
+  <div id="overlay" class="overlay" hidden></div>
+  <aside id="detail" class="detail" hidden aria-modal="true" role="dialog"></aside>
+
+  <div id="boot" class="boot"><div class="boot__spin"></div><p id="boot-msg">טוען מנוע נתונים (DuckDB-WASM)…</p></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
