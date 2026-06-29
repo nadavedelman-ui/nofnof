@@ -31,6 +31,8 @@ BLOCK_ABORT_THRESHOLD = 15                            # bail if the WAF starts b
 
 PAIR_RE = re.compile(
     r'<span class="prop_name">(.*?)</span>\s*<span class="prop_data">(.*?)</span>', re.S)
+# per-plant special-status icons (protected / red-list / nectar / edible / medicinal …)
+STATUS_RE = re.compile(r'<div class="prop-img_item">.*?<img[^>]*?alt="([^"]*)".*?</div>', re.S)
 TAG_RE = re.compile(r"<[^>]+>")
 LABEL_NAME_HE = "שם הצמח"
 LABEL_NAME_LAT = "שם מדעי"
@@ -72,6 +74,9 @@ def scrape_id(plant_id: int) -> str:
     fields = parse_plant(r.text)
     if LABEL_NAME_LAT not in fields and LABEL_NAME_HE not in fields:
         return "no_fields"
+    statuses = sorted({_clean(a) for a in STATUS_RE.findall(r.text) if _clean(a)})
+    if statuses:                                     # synthetic field → flows through EAV
+        fields["_statuses"] = "; ".join(statuses)
     record = {
         "source": SOURCE, "source_id": str(plant_id),
         "url": BASE.format(id=plant_id), "scraped_at": SNAPSHOT_DATE,

@@ -1090,7 +1090,6 @@ name_he,name_lat,source,source_id
 תלתן קיפודני,Trifolium lappaceum,wildflowers,2082
 בוצין הגליל,Verbascum galilaeum,wildflowers,2083
 תלתן הדור,Trifolium grandiflorum,wildflowers,2084
-שברק משונן,Ononis serrata,wildflowers,2086
 לוטוס צר-עלים,Lotus tenuis,wildflowers,2087
 שברק נטוי,Ononis reclinata,wildflowers,2088
 פילגון ארץ-ישראלי,Filago palaestina,wildflowers,2089
@@ -1447,8 +1446,6 @@ name_he,name_lat,source,source_id
 נורית סלילנית,Ranunculus pinardii,wildflowers,2460
 אשבל כרתי,Stachys cretica,wildflowers,2461
 דרדר אביבי,Centaurea solstitialis,wildflowers,2462
-געדת הסלעים,Teucrium montbretii,wildflowers,2463
-כריך מרוחק,Carex divulsa,wildflowers,2464
 בסיה שיכנית,Bassia muricata,wildflowers,2467
 בן-חילף הביצות,Eragrostis sarmentosa,wildflowers,2469
 קיפודן פלישתי,Echinops philistaeus,wildflowers,2472
@@ -2482,9 +2479,6 @@ name_he,name_lat,source,source_id
 תגית ארץ-ישראלית,Lomelosia palaestina,wildflowers,680
 סמר חד,Juncus acutus,wildflowers,681
 איריס טוביה,Iris regis-uzziae,wildflowers,685
-שבטבט גדול,Equisetum telmateia,wildflowers,686
-כף-צפרדע איזמלנית,Alisma lanceolatum,wildflowers,688
-נורית המים,Ranunculus peltatus,wildflowers,689
 טבורית נטויה,Umbilicus intermedius,wildflowers,69
 סוף מצוי,Typha domingensis,wildflowers,690
 אלף-עלה משובל,Myriophyllum spicatum,wildflowers,691

@@ -26,6 +26,10 @@ def main():
     print(f"  listed (curated IL invasive) : {b['listed']}")
     print(f"  potential (GRIIS alien)      : {b['potential']}")
     print(f"  not_listed (native)          : {b['not_listed']}")
+    s = res.get("status", {})
+    print(f"Special status (protected/red-list/nectar/edible/medicinal): "
+          f"{s.get('protected',0)}/{s.get('red_list',0)}/{s.get('nectar',0)}/{s.get('edible',0)}/{s.get('medicinal',0)}")
+    print(f"Taxa with location/region      : {res.get('with_region',0)}")
     print(f"Provenance rows                : {res['provenance_rows']}")
 
 

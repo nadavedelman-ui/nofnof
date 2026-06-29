@@ -22,6 +22,8 @@ const LIFE = {
 const lifeHe = v => (LIFE[v]?.he) || "—";
 const INVAS = {listed:{he:"פולש",cls:"listed"}, potential:{he:"פולש פוטנציאלי",cls:"potential"}, not_listed:null};
 const MONTHS = ["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
+const ZONES = [["coastal_plain","מישור החוף"],["northern_valleys","עמקי הצפון"],["mountains","הרים"],["negev_arava","נגב וערבה"]];
+const SPECIAL = [["protected","צמח מוגן"],["red_list","בסכנת הכחדה"],["nectar","צמח צופני"],["edible","מאכל / תבלין"],["medicinal","צמח מרפא"],["poisonous","צמח רעיל"],["allergenic","צמח אלרגני"]];
 
 /* ---------- botanical placeholder SVG (no photos in the dataset) ---------- */
 function placeholder(lifeForm, key){
@@ -65,22 +67,31 @@ async function q(sql){ return (await conn.query(sql)).toArray().map(r => ({...r}
 const esc = s => String(s).replace(/'/g, "''");
 
 /* ---------- filter state ---------- */
-const state = {search:"", life_form:"", invasive_status:"", family:"", month:"", habitat:"", forSale:false, sort:"name_he", limit:48};
-let facets = {families:[], habitats:[]};
+const state = {search:"", life_form:"", invasive_status:"", family:"", month:"", habitat:"",
+               zone:"", region:"", special:"", forSale:false, sort:"name_he", limit:48};
+let facets = {families:[], habitats:[], regions:[]};
+const SPECIAL_COLS = {protected:"protected", red_list:"red_list", nectar:"nectar", edible:"edible", medicinal:"medicinal", poisonous:"poisonous", allergenic:"allergenic"};
 
 function whereSQL(){
   const w = [];
-  if(state.search){ const s=esc(state.search); w.push(`(name_he ILIKE '%${s}%' OR scientific_name ILIKE '%${s}%' OR family ILIKE '%${s}%' OR habitat_he ILIKE '%${s}%')`); }
+  if(state.search){ const s=esc(state.search); w.push(`(name_he ILIKE '%${s}%' OR scientific_name ILIKE '%${s}%' OR name_ar ILIKE '%${s}%' OR family ILIKE '%${s}%' OR habitat_he ILIKE '%${s}%')`); }
   if(state.life_form) w.push(`life_form = '${esc(state.life_form)}'`);
   if(state.invasive_status) w.push(`invasive_status = '${esc(state.invasive_status)}'`);
   if(state.family) w.push(`family = '${esc(state.family)}'`);
   if(state.month) w.push(`bloom_months_he LIKE '%${esc(state.month)}%'`);
   if(state.habitat) w.push(`habitat_he = '${esc(state.habitat)}'`);
+  if(state.zone) w.push(`list_contains(climate_zone, '${esc(state.zone)}')`);
+  if(state.region) w.push(`list_contains(distribution_regions, '${esc(state.region)}')`);
+  if(state.special && SPECIAL_COLS[state.special]) w.push(`${SPECIAL_COLS[state.special]} = true`);
   if(state.forSale) w.push(`sold_by IS NOT NULL`);
   return w.length ? "WHERE "+w.join(" AND ") : "";
 }
-const SELECT = `SELECT CAST(canonical_taxon_id AS VARCHAR) id, name_he, scientific_name, family, genus,
+const SELECT = `SELECT CAST(canonical_taxon_id AS VARCHAR) id, name_he, name_ar, scientific_name, family, genus,
   life_form, native_status, invasive_status, bloom_months_he, habitat_he, distribution_il,
+  protected, red_list, nectar, edible, medicinal, poisonous, allergenic,
+  array_to_string(statuses_he, ' · ') statuses, array_to_string(distribution_regions, ', ') regions,
+  array_to_string(climate_zone, ', ') zones,
+  leaf_shape, leaf_margin, stem_shape, petals,
   array_to_string(common_names_en, ', ') common_en, array_to_string(synonyms_latin, ', ') synonyms,
   array_to_string(sold_by, ', ') sold_by, array_to_string(pot_sizes, ', ') pot_sizes,
   price_ils, price_band, availability, array_to_string(source_urls, ' ') source_urls, source_url,
@@ -104,7 +115,8 @@ function bloomShort(b){ if(!b) return "—"; const p=b.split(/[,\s]+/).filter(Bo
 
 function card(p){
   const inv = INVAS[p.invasive_status];
-  const badges = `<span class="badge badge--native">מקומי</span>${inv?`<span class="badge badge--${inv.cls}">${inv.he}</span>`:""}`;
+  const sec = p.red_list ? {he:"אדום",cls:"red"} : inv ? {he:inv.he,cls:inv.cls} : p.protected ? {he:"מוגן",cls:"prot"} : null;
+  const badges = `<span class="badge badge--native">מקומי</span>${sec?`<span class="badge badge--${sec.cls}">${sec.he}</span>`:""}`;
   const foot = p.sold_by
     ? `<span class="price">₪${p.price_ils}<small> · ${p.pot_sizes||""}</small></span><span class="stock stock--${p.availability==='in_stock'?'in':'out'}">${p.availability==='in_stock'?'במלאי':'אזל'}</span>`
     : `<span class="attr__lbl" style="font-size:12.5px">${p.family||""}</span>`;
@@ -145,8 +157,11 @@ function renderFilters(){
   const lifeOpts = Object.entries(LIFE).map(([v,o])=>({v, t:o.he}));
   fl.innerHTML = [
     sel("life_form","צורת חיים","🌿", lifeOpts),
+    sel("zone","אזור אקלים","🗺️", ZONES.map(([v,t])=>({v,t}))),
+    sel("region","אזור בארץ","📍", facets.regions.map(r=>({v:r.region, t:`${r.region} (${r.c})`}))),
     sel("month","עונת פריחה","🗓️", MONTHS.map(m=>({v:m,t:m}))),
-    sel("habitat","בית גידול","📍", facets.habitats.map(h=>({v:h.habitat_he, t:`${h.habitat_he} (${h.c})`}))),
+    sel("habitat","בית גידול","🌱", facets.habitats.map(h=>({v:h.habitat_he, t:`${h.habitat_he} (${h.c})`}))),
+    sel("special","ייחוד / שימור","✦", SPECIAL.map(([v,t])=>({v,t}))),
     sel("family","משפחה","🧬", facets.families.map(f=>({v:f.family, t:`${f.family} (${f.c})`}))),
     sel("invasive_status","סטטוס פלישה","⚠️", [{v:"listed",t:"פולש"},{v:"potential",t:"פולש פוטנציאלי"},{v:"not_listed",t:"לא פולש"}]),
     `<label class="chip" id="chip-sale"><span class="chip__ic">🛒</span>למכירה</label>`,
@@ -198,6 +213,9 @@ const overlay = document.getElementById("overlay"), detail = document.getElement
 function openDetail(p){
   const inv = INVAS[p.invasive_status];
   const regions = (p.distribution_il||"").split(/[,،]\s*/).filter(Boolean).map(r=>`<span class="region">${r}</span>`).join("");
+  const ZL = Object.fromEntries(ZONES);
+  const zoneChips = (p.zones||"").split(", ").filter(Boolean).map(z=>`<span class="region region--zone">${ZL[z]||z}</span>`).join("");
+  const statusChips = (p.statuses||"").split(" · ").filter(Boolean).map(s=>`<span class="dchip dchip--status">✦ ${s}</span>`).join("");
   const sellerSec = p.sold_by ? `<h3 class="detail__sec">זמינות מסחרית</h3>
     <div class="seller-row"><span>נמכר ב־<b>${p.sold_by}</b> · עציץ ${p.pot_sizes||"—"}</span><span class="price">₪${p.price_ils} <small>(${p.price_band})</small></span></div>` : "";
   const dphoto = p.image_thumb ? `<img class="detail__photo" src="${p.image_thumb}" alt="${p.name_he||''}" onerror="this.remove()">` : "";
@@ -212,15 +230,20 @@ function openDetail(p){
         <span class="dchip">מקומי</span>${inv?`<span class="dchip">${inv.he}</span>`:""}
         <span class="dchip">${LIFE[p.life_form]?.ic||"🌱"} ${lifeHe(p.life_form)}</span>
         ${p.family?`<span class="dchip">🧬 ${p.family}</span>`:""}
+        ${statusChips}
       </div>
       <div class="detail__grid">
         <div class="dfield"><div class="dfield__lbl">סוג / Genus</div><div class="dfield__val">${p.genus||"—"}</div></div>
         <div class="dfield"><div class="dfield__lbl">עונת פריחה</div><div class="dfield__val">${p.bloom_months_he||"—"}</div></div>
+        ${p.name_ar?`<div class="dfield"><div class="dfield__lbl">שם ערבי</div><div class="dfield__val">${p.name_ar}</div></div>`:""}
+        ${p.leaf_shape?`<div class="dfield"><div class="dfield__lbl">צורת עלה</div><div class="dfield__val">${p.leaf_shape}${p.leaf_margin?` · ${p.leaf_margin}`:""}</div></div>`:""}
+        ${p.stem_shape?`<div class="dfield"><div class="dfield__lbl">צורת גבעול</div><div class="dfield__val">${p.stem_shape}</div></div>`:""}
+        ${p.petals?`<div class="dfield"><div class="dfield__lbl">עלי כותרת</div><div class="dfield__val">${p.petals}</div></div>`:""}
         <div class="dfield dfield--wide"><div class="dfield__lbl">בית גידול</div><div class="dfield__val">${p.habitat_he||"—"}</div></div>
         ${p.common_en?`<div class="dfield dfield--wide"><div class="dfield__lbl">שם נפוץ (אנגלית)</div><div class="dfield__val">${p.common_en}</div></div>`:""}
         ${p.synonyms?`<div class="dfield dfield--wide"><div class="dfield__lbl">שמות נרדפים (לטינית)</div><div class="dfield__val" style="font-style:italic">${p.synonyms}</div></div>`:""}
       </div>
-      ${regions?`<h3 class="detail__sec">תפוצה בארץ</h3><div class="regions">${regions}</div>`:""}
+      ${regions?`<h3 class="detail__sec">תפוצה ואקלים</h3><div class="regions">${zoneChips}${regions}</div>`:""}
       ${sellerSec}
       ${p.source_url?`<a class="src-link" href="${p.source_url}" target="_blank" rel="noopener">מקור: צמח השדה (קק״ל) ↗</a>`:""}
       <p class="prov-note">זהות וטקסונומיה: GBIF · בית גידול/פריחה/תפוצה: צמח השדה · סטטוס פלישה: GRIIS + רשימת פולשים מהספרות · מחיר/זמינות: משתלת אזור. כל ערך נשמר עם מקורו בטבלת ה-provenance.</p>
@@ -263,6 +286,7 @@ function toggleView(v){ document.getElementById("view-grid").classList.toggle("i
     await initDB();
     facets.families = await q(`SELECT family, count(*) c FROM plants WHERE family IS NOT NULL GROUP BY 1 ORDER BY c DESC`);
     facets.habitats = await q(`SELECT habitat_he, count(*) c FROM plants WHERE habitat_he IS NOT NULL GROUP BY 1 ORDER BY c DESC`);
+    facets.regions = await q(`SELECT region, count(*) c FROM (SELECT unnest(distribution_regions) region FROM plants) GROUP BY 1 ORDER BY c DESC`);
     renderFilters();
     await renderStats();
     await runQuery();
